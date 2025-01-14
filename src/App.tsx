@@ -1,8 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
-import Home from './pages/Home';
 import Footer from './components/Footer';
+import Home from './pages/Home';
+import Explore from './pages/Explore';
 import PhenomenonPage from './pages/PhenomenonPage';
 import StarField from './components/StarField';
 import { phenomena } from './data/phenomena';
@@ -10,20 +11,28 @@ import { phenomena } from './data/phenomena';
 function App() {
   return (
     <Router>
-      <div className="min-h-screen cosmic-bg relative">
+      <div className="min-h-screen relative overflow-hidden">
+        {/* Background layer */}
         <StarField />
-        <div className="relative z-10">
-          <Navbar />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            {phenomena.map((phenomenon) => (
-              <Route
-                key={phenomenon.id}
-                path={`/${phenomenon.id}`}
-                element={<PhenomenonPage phenomenon={phenomenon} />}
-              />
-            ))}
-          </Routes>
+        
+        {/* Layout div for content */}
+        <div className="absolute inset-0 z-10 flex flex-col">
+          <div className="layout">
+            <Navbar />
+          </div>
+          <main className="flex-grow pt-16">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/explore" element={<Explore />} />
+              {phenomena.map((phenomenon) => (
+                <Route
+                  key={phenomenon.id}
+                  path={`/${phenomenon.id}`}
+                  element={<PhenomenonPage phenomenon={phenomenon} />}
+                />
+              ))}
+            </Routes>
+          </main>
           <Footer />
         </div>
       </div>

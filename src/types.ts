@@ -15,4 +15,6 @@ export interface Phenomenon {
   description: string;
   sections: Section[];
   links: Link[];
+  isFeatured: boolean;
+  image?: string; // Optional image property
 }

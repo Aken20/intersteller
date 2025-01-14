@@ -1,49 +1,76 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
+import './StarField.css'; // Ensure you have a CSS file for styles
 
 const StarField = () => {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
   useEffect(() => {
-    // Create stars
-    const createStars = () => {
-      const container = document.querySelector('.star-container');
-      if (!container) return;
+    const canvas = canvasRef.current;
+    if (!canvas) return;
 
-      // Clear existing stars
-      container.innerHTML = '';
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
 
-      // Add static stars
-      for (let i = 0; i < 150; i++) {
-        const star = document.createElement('div');
-        star.className = 'star';
-        star.style.left = `${Math.random() * 100}%`;
-        star.style.top = `${Math.random() * 100}%`;
-        star.style.animationDelay = `${Math.random() * 4}s`;
-        container.appendChild(star);
-      }
+    // Set canvas size to window size
+    const setCanvasSize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+    setCanvasSize();
+    window.addEventListener('resize', setCanvasSize);
 
-      // Add shooting stars
-      for (let i = 0; i < 3; i++) {
-        const shootingStar = document.createElement('div');
-        shootingStar.className = 'shooting-star';
-        shootingStar.style.left = `${Math.random() * 100}%`;
-        shootingStar.style.top = `${Math.random() * 100}%`;
-        shootingStar.style.animationDelay = `${Math.random() * 8}s`;
-        container.appendChild(shootingStar);
-      }
+    // Star properties
+    const stars: { x: number; y: number; size: number; speed: number }[] = [];
+    const numStars = Math.floor((window.innerWidth * window.innerHeight) / 2000);
+    
+    // Initialize stars
+    for (let i = 0; i < numStars; i++) {
+      stars.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        size: Math.random() * 2,
+        speed: Math.random() * 0.5 + 0.1
+      });
+    }
+
+    // Animation loop
+    let animationFrameId: number;
+    const animate = () => {
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Draw and update stars
+      stars.forEach(star => {
+        ctx.beginPath();
+        ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255, 255, 255, ${Math.random() * 0.3 + 0.7})`;
+        ctx.fill();
+
+        // Move stars
+        star.y += star.speed;
+        if (star.y > canvas.height) {
+          star.y = 0;
+          star.x = Math.random() * canvas.width;
+        }
+      });
+
+      animationFrameId = requestAnimationFrame(animate);
     };
 
-    createStars();
-    window.addEventListener('resize', createStars);
+    animate();
 
+    // Cleanup
     return () => {
-      window.removeEventListener('resize', createStars);
+      window.removeEventListener('resize', setCanvasSize);
+      cancelAnimationFrame(animationFrameId);
     };
   }, []);
 
   return (
-    <>
-      <div className="star-container fixed inset-0 pointer-events-none z-0" />
-      <div className="nebula z-0" />
-    </>
+    <canvas
+      ref={canvasRef}
+      className="fixed inset-0 z-0" // Fixed position and lower z-index
+    />
   );
 };
 
