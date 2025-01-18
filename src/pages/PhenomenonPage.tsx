@@ -7,9 +7,9 @@ interface PhenomenonPageProps {
   phenomenon: Phenomenon;
 }
 
-const PhenomenonImage: React.FC<{ image: string; title: string }> = ({ image, title }) => (
-  <div className="w-1/2 flex items-center justify-center">
-    <img src={image} alt={title} className="max-w-full h-auto" />
+const PhenomenonImage: React.FC<{ image: string; title: string; className?: string }> = ({ image, title, className }) => (
+  <div className={`flex items-center justify-center ${className || ''}`} style={{ width: '560px', height: '340px', overflow: 'hidden' }}>
+    <img src={image} alt={title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
   </div>
 );
 
@@ -76,9 +76,14 @@ const PhenomenonPage: React.FC<PhenomenonPageProps> = ({ phenomenon }) => {
         </motion.div>
       </div>
 
-      {phenomenon.image && (
-        <PhenomenonImage image={phenomenon.image} title={phenomenon.title} />
-      )}
+      <div>
+        {phenomenon.image && (
+          <PhenomenonImage
+            image={phenomenon.image}
+            title={phenomenon.title}
+          />
+        )}
+      </div>
     </div>
   );
 };

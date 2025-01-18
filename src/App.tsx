@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Home from './pages/Home';
-import Explore from './pages/Explore';
 import PhenomenonPage from './pages/PhenomenonPage';
 import StarField from './components/StarField';
 import { phenomena } from './data/phenomena';
@@ -17,13 +16,12 @@ function App() {
         
         {/* Layout div for content */}
         <div className="absolute inset-0 z-10 flex flex-col">
-          <div className="layout">
+          {/* <div className="layout">
             <Navbar />
-          </div>
+          </div> */}
           <main className="flex-grow pt-16">
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/explore" element={<Explore />} />
               {phenomena.map((phenomenon) => (
                 <Route
                   key={phenomenon.id}

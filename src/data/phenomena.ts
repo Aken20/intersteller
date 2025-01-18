@@ -51,6 +51,7 @@ export const phenomena: Phenomenon[] = [
       },
     ],
     isFeatured: true,
+    image: "./neutron_star.jpg"
   },
   {
     id: 'gamma-ray-bursts',
@@ -74,6 +75,7 @@ export const phenomena: Phenomenon[] = [
       }
     ],
     isFeatured: false,
+    image: "./gamma_ray_burst.jpg"
   },
   {
     id: 'gravitational-waves',
@@ -97,6 +99,7 @@ export const phenomena: Phenomenon[] = [
       }
     ],
     isFeatured: false,
+    image: "./gravitational_waves.jpg"
   },
   {
     id: 'dark-matter-and-dark-energy',
@@ -120,6 +123,7 @@ export const phenomena: Phenomenon[] = [
       }
     ],
     isFeatured: false,
+    image: "./dark_matter.webp"
   },
   {
     id: 'quantum-entanglement',
@@ -143,6 +147,7 @@ export const phenomena: Phenomenon[] = [
       }
     ],
     isFeatured: false,
+    image: "./quantum_entanglement.jpg"
   },
   {
     id: 'antimatter-worlds',
@@ -166,6 +171,7 @@ export const phenomena: Phenomenon[] = [
       }
     ],
     isFeatured: false,
+    image: "./antimatter.jpg"
   },
   {
     id: 'spacetime-crystals',
@@ -189,5 +195,6 @@ export const phenomena: Phenomenon[] = [
       }
     ],
     isFeatured: false,
+    image: "./spacetime_crystals.png"
   }
 ];
